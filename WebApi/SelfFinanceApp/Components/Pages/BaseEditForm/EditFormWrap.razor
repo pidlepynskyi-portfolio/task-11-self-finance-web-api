@@ -1,0 +1,74 @@
+﻿@page "/incomes/edit/{id:int}"
+@page "/incomes/add"
+@page "/expenses/edit/{id:int}"
+@page "/expenses/add"
+@page "/typesIncomes/edit/{id:int}"
+@page "/typesIncomes/add"
+@page "/typesExpenses/edit/{id:int}"
+@page "/typesExpenses/add"
+@using Microsoft.AspNetCore.Components.Rendering
+@using SelfFinanceApp.Components.Pages.Incomes
+@using SelfFinanceApp.Components.Pages.Expenses
+@using SelfFinanceApp.Components.Pages.TypesIncomes
+@using SelfFinanceApp.Components.Pages.TypesExpenses
+@using SelfFinanceApp.Services.RouteHistory
+@using System.Text.RegularExpressions
+
+@rendermode RenderMode.InteractiveServer
+@inject IHostEnvironment HostEnvironment
+
+<ErrorBoundary Context="Exception" @ref="errorBoundary">
+    <ChildContent>
+        @_renderForm
+    </ChildContent>
+    <ErrorContent>
+        <MudAlert Severity="Severity.Error" Variant="Variant.Outlined" NoIcon="true" Class="my-2">
+            @if (HostEnvironment.IsProduction())
+            {
+                <MudText>An error has occurred.</MudText>
+            }
+            else
+            {
+                <MudText>@Exception.Message</MudText>
+            }
+            
+            <MudButton Color="Color.Primary" OnClick="GoToBack">Close</MudButton>
+        </MudAlert>
+    </ErrorContent>
+</ErrorBoundary>
+
+@code {
+    void RenderForm(RenderTreeBuilder __builder)
+    {
+        var currentPath = Navigation.ToBaseRelativePath(Navigation.Uri);
+        if (!Regex.IsMatch(currentPath, @"((?<=^\/)|^)\w*(?=\/)")
+            || !Regex.IsMatch(currentPath, @"(?<=^\/?\w+\/)\w*(?=\/?)"))
+        {
+            throw new InvalidOperationException();
+        }
+
+        var controller = Regex.Match(currentPath, @"((?<=^\/)|^)\w*(?=\/)").ToString();
+        var action = Regex.Match(currentPath, @"(?<=^\/?\w+\/)\w*(?=\/?)").ToString();
+        string headerPage = "";
+
+        switch (controller)
+        {
+            case "incomes":
+                headerPage = GetHeaderPageFromAction(action, "Income");
+                <EditFormIncome Id="@Id" HeaderPage="@headerPage"></EditFormIncome>
+                break;
+            case "expenses":
+                headerPage = GetHeaderPageFromAction(action, "Expense");
+                <EditFormExpense Id="@Id" HeaderPage="@headerPage"></EditFormExpense>
+                break;
+            case "typesIncomes":
+                headerPage = GetHeaderPageFromAction(action, "Type Incomes");
+                <EditFormTypeIncomes Id="@Id" HeaderPage="@headerPage"></EditFormTypeIncomes>
+                break;
+            case "typesExpenses":
+                headerPage = GetHeaderPageFromAction(action, "Type Expenses");
+                <EditFormTypeExpenses Id="@Id" HeaderPage="@headerPage"></EditFormTypeExpenses>
+                break;
+        }
+    }
+}

@@ -1,0 +1,21 @@
+﻿@using InfrastructureApi.DTO
+@using Microsoft.AspNetCore.Components.Rendering
+@using SelfFinanceApp.Components.Pages.BaseEditForm
+@inherits BaseEditFormItem<ExpenseDTO>
+@{
+    base.BuildRenderTree(__builder);
+}
+
+@code {
+    protected internal override void RenderInputComponentsForm(RenderTreeBuilder __builder)
+    {
+        <MudSelect @bind-Value="itemEdited.TypeId" For="@(() => itemEdited.TypeId)" Label="Types" Variant="Variant.Text" Class="mt-6">
+            @foreach (var typeExpense in typesExpenses!)
+            {
+                <MudSelectItem Value="typeExpense.Id">@typeExpense.Name</MudSelectItem>
+            }
+        </MudSelect>
+        <MudTextField @bind-Value="itemEdited.Amount" For="@(() => itemEdited.Amount)" Label="Amount" Variant="Variant.Text" Class="mt-6"></MudTextField>
+        <MudTextField T="string" @bind-Text="itemEdited.Comments" For="@(() => itemEdited.Comments)" Label="Comments" Variant="Variant.Outlined" Class="mt-6"></MudTextField>
+    }
+}

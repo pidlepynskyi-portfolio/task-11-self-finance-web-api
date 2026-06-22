@@ -1,0 +1,40 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MudBlazor" Version="7.8.0" />
+    <PackageReference Include="Serilog.AspNetCore" Version="8.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\InfrastructureApi\InfrastructureApi.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="OpenApiDocs\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Components\Pages\Reports\ChartsReport.razor" />
+    <_ContentIncludedByDefault Remove="Components\Pages\TypesExpenses\EditFormTypeExpenses.razor" />
+    <_ContentIncludedByDefault Remove="Components\Pages\TypesExpenses\TypesExpenses.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Components\Pages\TypesExpenses\TypesExpenses.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Components\Pages\TypesExpenses\EditFormTypeExpenses.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Components\Pages\Reports\ChartsReport.razor" />
+  </ItemGroup>
+
+</Project>

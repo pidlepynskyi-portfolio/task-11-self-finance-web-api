@@ -1,0 +1,14 @@
+﻿<MudPaper Width="260px" Elevation="0">
+    <MudNavMenu Rounded="true" Margin="Margin.Dense" Color="Color.Primary" Class="pa-2">
+        <MudNavLink Match="NavLinkMatch.All" Href="" Icon="@Icons.Material.Filled.Home">Home</MudNavLink>
+        <MudNavGroup Icon="@Icons.Material.Filled.CurrencyExchange" Title="Finance operations" Expanded="true">
+            <MudNavLink Href="incomes">Incomes</MudNavLink>
+            <MudNavLink Href="expenses">Expenses</MudNavLink>
+        </MudNavGroup>
+        <MudNavGroup Icon="@Icons.Material.Filled.LocalAtm" Title="Types operations" Expanded="true">
+            <MudNavLink Href="typesIncomes">Types Incomes</MudNavLink>
+            <MudNavLink Href="typesExpenses">Types Expenses</MudNavLink>
+        </MudNavGroup>
+        <MudNavLink Icon="@Icons.Material.Filled.RequestPage" Href="report">Report</MudNavLink>
+    </MudNavMenu>
+</MudPaper>

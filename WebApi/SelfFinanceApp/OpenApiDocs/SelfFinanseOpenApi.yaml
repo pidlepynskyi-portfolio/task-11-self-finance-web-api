@@ -1,0 +1,1180 @@
+openapi: 3.0.3
+info:
+  title: Self finance API
+  description: Self finance API
+  version: 1.0.0
+servers:
+  - url: "https://localhost:7281/"
+
+paths:
+  /api/incomes:
+    get:
+      tags:
+        - incomes
+      summary: Get All Incomes
+      description: Get all incomes data
+      operationId: getAllIncomes
+      responses:
+        200:
+          description: Succesful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Incomes'
+              examples:
+                Incomes:
+                  $ref: '#/components/examples/IncomesGetAll'
+        default:
+          $ref: '#/components/responses/UnexpectedError'
+                
+  /api/incomes/{id}:
+    get:
+      tags:
+        - incomes
+      summary: Get Income By Id
+      description: Get one income by id
+      operationId: getIncomeById
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        200:
+          description: Succesful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Income'
+              examples:
+                Income:
+                  $ref: '#/components/examples/IncomeGet'
+        404:
+          description: Income not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/404_NotFound'
+              example:
+                message: Income not found
+        default:
+          $ref: '#/components/responses/UnexpectedError'
+    
+    delete:
+      tags:
+        - incomes
+      summary: Delete Income By Id
+      description: Delete one income by id
+      operationId: deleteIncomeById
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        200:
+          description: Succesful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Income'
+              examples:
+                Income:
+                  $ref: '#/components/examples/IncomePutDeleteResponse'
+        404:
+          description: Income not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/404_NotFound'
+              example:
+                message: Income not found
+        default:
+          $ref: '#/components/responses/UnexpectedError'
+  
+  /api/incomes/add:
+    post:
+      tags:
+        - incomes
+      summary: Add new income item
+      description: Add new income item
+      operationId: postIncome
+      requestBody:
+        description: created new object Income for add to DB
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Income'
+            examples:
+              Income:
+                $ref: '#/components/examples/IncomePostRequest'
+      responses:
+        200:
+          description: Success response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message: 
+                    type: string
+                    description: text error
+                    example: Income added successed!
+        default:
+          $ref: '#/components/responses/UnexpectedError'
+  
+  /api/incomes/edit:
+    put:
+      tags:
+        - incomes
+      summary: Edit choised income item
+      description: Edit exists income item
+      operationId: editIncome
+      requestBody:
+        description: changing coised object Income for update to DB
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Income'
+            examples:
+              Income:
+                $ref: '#/components/examples/IncomePutRequest'
+      responses:
+        200:
+          description: Success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Income'
+              examples:
+                Income:
+                  $ref: '#/components/examples/IncomePutDeleteResponse'
+        default:
+          $ref: '#/components/responses/UnexpectedError'
+                  
+  
+  /api/expenses:
+    get:
+      tags:
+        - expenses
+      summary: Get All Expenses
+      description: Get all expenses data
+      operationId: getAllExpenses
+      responses:
+        200:
+          description: Succesful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Expenses'
+              examples:
+                Incomes:
+                  $ref: '#/components/examples/ExpensesGetAll'
+        default:
+          $ref: '#/components/responses/UnexpectedError'
+                
+  /api/expenses/{id}:
+    get:
+      tags:
+        - expenses
+      summary: Get Expense By Id
+      description: Get one expense by id
+      operationId: getExpenseById
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        200:
+          description: Succesful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Expense'
+              examples:
+                Income:
+                  $ref: '#/components/examples/ExpenseGet'
+        404:
+          description: Expense not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/404_NotFound'
+              example:
+                message: Expense not found
+        default:
+          $ref: '#/components/responses/UnexpectedError'
+    
+    delete:
+      tags:
+        - expenses
+      summary: Delete Expense By Id
+      description: Delete one expense by id
+      operationId: deleteExpenseById
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        200:
+          description: Succesful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Income'
+              examples:
+                Income:
+                  $ref: '#/components/examples/IncomePutDeleteResponse'
+        404:
+          description: Expense not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/404_NotFound'
+              example:
+                message: Expense not found
+        default:
+          $ref: '#/components/responses/UnexpectedError'
+  
+  /api/expenses/add:
+    post:
+      tags:
+        - expenses
+      summary: Add new expense item
+      description: Add new expense item
+      operationId: postExpense
+      requestBody:
+        description: created new object Expense for add to DB
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Expense'
+            examples:
+              Income:
+                $ref: '#/components/examples/ExpensePostRequest'
+      responses:
+        200:
+          description: Success response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message: 
+                    type: string
+                    description: text error
+                    example: Expense added successed!
+        default:
+          $ref: '#/components/responses/UnexpectedError'
+  
+  /api/expenses/edit:
+    put:
+      tags:
+        - expenses
+      summary: Edit choised expense item
+      description: Edit exists expense item
+      operationId: editExpense
+      requestBody:
+        description: changing coised object Expense for update to DB
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Expense'
+            examples:
+              Income:
+                $ref: '#/components/examples/ExpensePutRequest'
+      responses:
+        200:
+          description: Success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Income'
+              examples:
+                Income:
+                  $ref: '#/components/examples/IncomePutDeleteResponse'
+        default:
+          $ref: '#/components/responses/UnexpectedError'
+
+
+  /api/typeIncomes:
+    get:
+      tags:
+        - typeIncomes
+      summary: Get All Types Incomes
+      description: Get all types incomes data
+      operationId: getAllTypesIncomes
+      responses:
+        200:
+          description: Succesful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TypesIncomes'
+              examples:
+                TypesIncomes:
+                  $ref: '#/components/examples/TypesIncomesGetAll'
+        default:
+          $ref: '#/components/responses/UnexpectedError'
+                
+  /api/typeIncomes/{id}:
+    get:
+      tags:
+        - typeIncomes
+      summary: Get TypeIncomes By Id
+      description: Get one type incomes by id
+      operationId: getTypeIncomesById
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        200:
+          description: Succesful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TypeIncomes'
+              examples:
+                TypeIncomes:
+                  $ref: '#/components/examples/TypeIncomesGet'
+        404:
+          description: TypeIncomes not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/404_NotFound'
+              example:
+                message: TypeIncomes not found
+        default:
+          $ref: '#/components/responses/UnexpectedError'
+    
+    delete:
+      tags:
+        - typeIncomes
+      summary: Delete TypeIncomes By Id
+      description: Delete one TypeIncomes by id
+      operationId: deleteTypeIncomesById
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        200:
+          description: Succesful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TypeIncomes'
+              examples:
+                TypeIncomes:
+                  $ref: '#/components/examples/TypeIncomesPutDeleteResponse'
+        404:
+          description: TypeIncomes not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/404_NotFound'
+              example:
+                message: TypeIncomes not found
+        default:
+          $ref: '#/components/responses/UnexpectedError'
+  
+  /api/typeIncomes/add:
+    post:
+      tags:
+        - typeIncomes
+      summary: Add new typeIncomes item
+      description: Add new typeIncomes item
+      operationId: postTypeIncomes
+      requestBody:
+        description: created new object TypeIncomes for add to DB
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TypeIncomes'
+            examples:
+              TypeIncomes:
+                $ref: '#/components/examples/TypeIncomesPostRequest'
+      responses:
+        200:
+          description: Success response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message: 
+                    type: string
+                    description: text error
+                    example: TypeIncomes added successed!
+        default:
+          $ref: '#/components/responses/UnexpectedError'
+  
+  /api/typeIncomes/edit:
+    put:
+      tags:
+        - typeIncomes
+      summary: Edit choised typeIncomes item
+      description: Edit exists typeIncomes item
+      operationId: editTypeIncomes
+      requestBody:
+        description: changing coised object TypeIncomes for update to DB
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TypeIncomes'
+            examples:
+              TypeIncomes:
+                $ref: '#/components/examples/TypeIncomesPutRequest'
+      responses:
+        200:
+          description: Success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TypeIncomes'
+              examples:
+                TypeIncomes:
+                  $ref: '#/components/examples/TypeIncomesPutDeleteResponse'
+        default:
+          $ref: '#/components/responses/UnexpectedError'
+
+
+  /api/typeExpenses:
+    get:
+      tags:
+        - typeExpenses
+      summary: Get All Types Expenses
+      description: Get all types expenses data
+      operationId: getAllTypesExpenses
+      responses:
+        200:
+          description: Succesful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TypesExpenses'
+              examples:
+                TypesExpenses:
+                  $ref: '#/components/examples/TypesExpensesGetAll'
+        default:
+          $ref: '#/components/responses/UnexpectedError'
+                
+  /api/typeExpenses/{id}:
+    get:
+      tags:
+        - typeExpenses
+      summary: Get TypeExpenses By Id
+      description: Get one type expenses by id
+      operationId: getTypeExpensesById
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        200:
+          description: Succesful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TypeExpenses'
+              examples:
+                TypeExpenses:
+                  $ref: '#/components/examples/TypeExpensesGet'
+        404:
+          description: TypeExpenses not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/404_NotFound'
+              example:
+                message: TypeExpenses not found
+        default:
+          $ref: '#/components/responses/UnexpectedError'
+    
+    delete:
+      tags:
+        - typeExpenses
+      summary: Delete TypeExpenses By Id
+      description: Delete one TypeExpenses by id
+      operationId: deleteTypeExpensesById
+      parameters:
+        - $ref: '#/components/parameters/id'
+      responses:
+        200:
+          description: Succesful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TypeExpenses'
+              examples:
+                TypeExpenses:
+                  $ref: '#/components/examples/TypeExpensesPutDeleteResponse'
+        404:
+          description: TypeExpenses not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/404_NotFound'
+              example:
+                message: TypeExpenses not found
+        default:
+          $ref: '#/components/responses/UnexpectedError'
+  
+  /api/typeExpenses/add:
+    post:
+      tags:
+        - typeExpenses
+      summary: Add new typeExpenses item
+      description: Add new typeExpenses item
+      operationId: postTypeExpenses
+      requestBody:
+        description: created new object TypeExpenses for add to DB
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TypeExpenses'
+            examples:
+              TypeExpenses:
+                $ref: '#/components/examples/TypeExpensesPostRequest'
+      responses:
+        200:
+          description: Success response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message: 
+                    type: string
+                    description: text error
+                    example: TypeExpenses added successed!
+        default:
+          $ref: '#/components/responses/UnexpectedError'
+  
+  /api/typeExpenses/edit:
+    put:
+      tags:
+        - typeExpenses
+      summary: Edit choised typeExpenses item
+      description: Edit exists typeExpenses item
+      operationId: editTypeExpenses
+      requestBody:
+        description: changing coised object TypeExpenses for update to DB
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TypeExpenses'
+            examples:
+              TypeExpenses:
+                $ref: '#/components/examples/TypeExpensesPutRequest'
+      responses:
+        200:
+          description: Success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TypeExpenses'
+              examples:
+                TypeExpenses:
+                  $ref: '#/components/examples/TypeExpensesPutDeleteResponse'
+        default:
+          $ref: '#/components/responses/UnexpectedError'
+                  
+  /api/report/period:
+    get:
+      tags:
+        - report
+      summary: Get report by period
+      description: Get report by period
+      operationId: getReportByPeriod
+      parameters:
+        - $ref: '#/components/parameters/startDate'
+        - $ref: '#/components/parameters/endDate'
+      responses:
+        200:
+          description: Succesful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Report'
+              examples:
+                Report:
+                  $ref: '#/components/examples/ReportByPeriod'
+        400:
+          description: Incorrect input date
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/400_IncorrectDate'
+              examples:
+                IncorrectDate:
+                  value:
+                    message: The date entered is incorrect.
+                DateComparisonError:
+                  value:
+                    message: The start date of the period must not exceed the end date of the period!
+        default:
+          $ref: '#/components/responses/UnexpectedError'
+                
+  /api/report/toDate/{toDate}:
+    get:
+      tags:
+        - report
+      summary: Get report by enter date
+      description: Get report by enter date
+      operationId: getReportByEnterDate
+      parameters:
+        - $ref: '#/components/parameters/toDate'
+      responses:
+        200:
+          description: Succesful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Report'
+              examples:
+                Report:
+                  $ref: '#/components/examples/ReportByEnterDate'
+        400:
+          description: Incorrect input date
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/400_IncorrectDate'
+              examples:
+                IncorrectDate:
+                  value:
+                    message: The date entered is incorrect.
+        default:
+          $ref: '#/components/responses/UnexpectedError'
+
+
+components:
+  responses:
+    UnexpectedError:
+      description: Unexpected error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UnexpectedError'
+          examples:
+            ErrorMessage:
+              $ref: '#/components/examples/UnexpectedError'
+
+  parameters:
+    id:
+      name: id
+      in: path
+      description: Identificator for get one item
+      required: true
+      schema:
+        type: integer
+      example: 23
+      
+    startDate:
+      name: startDate
+      in: query
+      description: Start date period for report
+      required: true
+      schema:
+        type: string
+      example: 20240301
+    endDate:
+      name: endDate
+      in: query
+      description: End date period for report
+      required: false
+      schema:
+        type: string
+      example: 20240331
+    toDate:
+      name: toDate
+      in: path
+      description: To entered date for report
+      required: true
+      schema:
+        type: string
+      example: 20240724  
+        
+  schemas:
+    Incomes:
+      title: Incomes
+      type: array
+      items:
+        $ref: '#/components/schemas/Income'
+          
+    Income:
+      title: Income
+      type: object
+      properties:
+        typeIncome:
+          type: object
+          description: Master Table
+        id:
+          $ref: '#/components/schemas/id'
+        amount: 
+          $ref: '#/components/schemas/amount'
+        createDate:
+          $ref: '#/components/schemas/createDate'
+        updateDate:
+          $ref: '#/components/schemas/updateDate'
+        typeId:
+          $ref: '#/components/schemas/typeId'
+        comments: 
+          $ref: '#/components/schemas/comments'
+    
+    Expenses:
+      title: Expenses
+      type: array
+      items:
+        $ref: '#/components/schemas/Expense'
+          
+    Expense:
+      title: Expense
+      type: object
+      properties:
+        typeExpense:
+          type: object
+          description: Master Table
+        id:
+          $ref: '#/components/schemas/id'
+        amount: 
+          $ref: '#/components/schemas/amount'
+        createDate:
+          $ref: '#/components/schemas/createDate'
+        updateDate:
+          $ref: '#/components/schemas/updateDate'
+        typeId:
+          $ref: '#/components/schemas/typeId'
+        comments: 
+          $ref: '#/components/schemas/comments'
+          
+    TypesIncomes:
+      title: Types Incomes
+      type: array
+      items:
+        $ref: '#/components/schemas/TypeIncomes'
+    
+    TypeIncomes:
+      title: Type Incomes
+      type: object
+      properties:
+        incomes:
+          type: object
+          description: Detail table
+        id:
+          $ref: '#/components/schemas/id'
+        name:
+          $ref: '#/components/schemas/name'
+        description:
+          $ref: '#/components/schemas/description'
+        createDate:
+          $ref: '#/components/schemas/createDate'
+        updateDate:
+          $ref: '#/components/schemas/updateDate'
+          
+    TypesExpenses:
+      title: Types Expenses
+      type: array
+      items:
+        $ref: '#/components/schemas/TypeExpenses'    
+    
+    TypeExpenses:
+      title: Type Expenses
+      type: object
+      properties:
+        incomes:
+          type: object
+          description: Detail table
+        id:
+          $ref: '#/components/schemas/id'
+        name:
+          $ref: '#/components/schemas/name'
+        description:
+          $ref: '#/components/schemas/description'
+        createDate:
+          $ref: '#/components/schemas/createDate'
+        updateDate:
+          $ref: '#/components/schemas/updateDate'
+          
+    Report:
+      title: Report by period
+      type: object
+      properties:
+        incomeReport:
+          $ref: '#/components/schemas/incomeReport'
+        expenseReport:
+          $ref: '#/components/schemas/expenseReport'
+
+    incomeReport:
+      title: IncomeReport object
+      type: object
+      properties:
+        incomeSum:
+          type: number
+          description: sum income by period
+        listIncomeOperations:
+          $ref: '#/components/schemas/listIncomeOperations'
+
+    listIncomeOperations:
+      title: List Income Operations
+      type: array
+      items:
+        $ref: '#/components/schemas/Income'
+
+    expenseReport:
+      title: ExpenseReport object
+      type: object
+      properties:
+        expenseSum:
+          type: number
+          description: sum expense by period
+        listExpenseOperations:
+          $ref: '#/components/schemas/listExpenseOperations'
+
+    listExpenseOperations:
+      title: List Expense Operations
+      type: array
+      items:
+        $ref: '#/components/schemas/Expense'
+          
+    
+    400_IncorrectDate:
+      title: 400 Incorrect date
+      type: object
+      properties:
+        message:
+          $ref: '#/components/schemas/message'
+    
+    404_NotFound:
+      title: 404 Not Found
+      type: object
+      properties:
+        message:
+          $ref: '#/components/schemas/message'
+          
+    UnexpectedError:
+      title: Unexpected error
+      type: object
+      properties:
+        message:
+          $ref: '#/components/schemas/message'
+        
+    id:
+      type: integer
+      description: Identificator item auto generate
+    amount:
+      type: number
+      description: amount item
+    createDate:
+      type: string
+      description: create date auto added
+    updateDate:
+      type: string
+      description: change date auto added
+    typeId:
+      type: integer
+      description: identificator Type Operation
+    comments:
+      type: string
+      description: comments operation
+    name: 
+      type: string
+      description: name type operation
+    description:
+      type: string
+      description: dscription type operation
+    message:
+      type: string
+      description: text description error
+    
+    
+          
+  examples:
+    IncomesGetAll:
+      value:
+        - typeIncome:
+          amount: 4364.39
+          typeId: 1
+          comments:
+          id: 1
+          createDate: 2024-03-10T00:00:00
+          updateDate: 2024-03-10T00:00:00
+        - typeIncome:
+          amount: 2.65
+          typeId: 3
+          comments:
+          id: 2
+          createDate: 2024-03-15T00:00:00
+          updateDate: 2024-03-15T00:00:00
+  
+    IncomeGet:
+      value: 
+        typeIncome: 
+        amount: 1000
+        typeId: 4
+        comments: 
+        id: 23
+        createDate: 2024-07-24T10:45:37.257
+        updateDate: 2024-07-24T10:45:37.257
+        
+    IncomePostRequest:
+      value:
+        typeIncome:
+        id:
+        amount: 1000
+        createDate: 
+        updateDate:
+        typeId: 4
+        comments:
+    
+    IncomePutRequest:
+      value: 
+        typeIncome: 
+        amount: 800
+        typeId: 4
+        comments: 
+        id: 23
+        createDate: 2024-07-24T10:45:37.257
+        updateDate: 2024-07-24T10:45:37.257
+    IncomePutDeleteResponse:
+      value: 
+        typeIncome: 
+        amount: 800
+        typeId: 4
+        comments: 
+        id: 23
+        createDate: 2024-07-24T10:45:37.257
+        updateDate: 2024-07-24T10:58:20.93
+        
+    
+    ExpensesGetAll:
+      value:
+        - typeExpense:
+          amount: 2500
+          typeId: 1
+          comments:
+          id: 1
+          createDate: 2024-03-15T00:00:00
+          updateDate: 2024-03-15T00:00:00
+        - typeExpense:
+          amount: 1000
+          typeId: 2
+          comments:
+          id: 2
+          createDate: 2024-03-17T00:00:00
+          updateDate: 2024-03-17T00:00:00
+  
+    ExpenseGet:
+      value: 
+        typeExpense: 
+        amount: 1000
+        typeId: 4
+        comments: 
+        id: 23
+        createDate: 2024-07-24T17:21:43.697
+        updateDate: 2024-07-24T17:21:43.697
+        
+    ExpensePostRequest:
+      value:
+        typeExpense:
+        id:
+        amount: 1000
+        createDate: 
+        updateDate:
+        typeId: 4
+        comments:
+    
+    ExpensePutRequest:
+      value: 
+        typeExpense: 
+        amount: 800
+        typeId: 4
+        comments: 
+        id: 23
+        createDate: 2024-07-24T17:21:43.697
+        updateDate: 2024-07-24T17:21:43.697
+    ExpensePutDeleteResponse:
+      value: 
+        typeExpense: 
+        amount: 800
+        typeId: 4
+        comments: 
+        id: 23
+        createDate: 2024-07-24T17:21:43.697
+        updateDate: 2024-07-24T17:30:19.047
+        
+        
+    TypesIncomesGetAll:
+      value:
+        - incomes:
+          name: salary
+          description: salary
+          id: 1
+          createDate: 2024-05-18T22:23:09.88
+          updateDate: 2024-05-18T22:23:09.88
+        - incomes:
+          name: salary advance
+          description: salary advance
+          id: 2
+          createDate: 2024-05-18T22:23:09.88
+          updateDate: 2024-05-18T22:23:09.88
+  
+    TypeIncomesGet:
+      value: 
+        incomes:
+        name: salary test
+        description: salary test
+        id: 23
+        createDate: 2024-07-24T21:13:15.273
+        updateDate: 2024-07-24T21:13:15.273
+        
+    TypeIncomesPostRequest:
+      value:
+        incomes:
+        id:
+        name: salary test
+        description: salary test
+        createDate: 
+        updateDate:
+    
+    TypeIncomesPutRequest:
+      value: 
+        incomes:
+        id: 23
+        name: salary test edit
+        description: salary test edit
+        createDate: 
+        updateDate: 
+    TypeIncomesPutDeleteResponse:
+      value: 
+        incomes:
+        name: salary test edit
+        description: salary test edit
+        id: 23
+        createDate: 2024-07-24T21:13:15.273
+        updateDate: 2024-07-24T21:18:26.44
+        
+
+    TypesExpensesGetAll:
+      value:
+        - expenses:
+          name: communal payments
+          description: communal payments
+          id: 1
+          createDate: 2024-05-19T00:22:05.68
+          updateDate: 2024-05-19T00:22:05.68
+        - expenses:
+          name: grocery shopping
+          description: grocery shopping
+          id: 2
+          createDate: 2024-05-19T00:22:05.68
+          updateDate: 2024-05-19T00:22:05.68
+  
+    TypeExpensesGet:
+      value: 
+        expenses:
+        name: test payments
+        description: test payments
+        id: 23
+        createDate: 2024-07-24T21:33:09.567
+        updateDate: 2024-07-24T21:33:09.567
+        
+    TypeExpensesPostRequest:
+      value:
+        expenses:
+        id:
+        name: test payments
+        description: test payments
+        createDate: 
+        updateDate:
+    
+    TypeExpensesPutRequest:
+      value: 
+        expenses:
+        id: 23
+        name: test payments edit
+        description: test payments edit
+        createDate: 
+        updateDate: 
+    TypeExpensesPutDeleteResponse:
+      value: 
+        expenses:
+        name: test payments edit
+        description: test payments edit
+        id: 23
+        createDate: 2024-07-24T21:33:09.567
+        updateDate: 2024-07-24T21:36:52.12    
+        
+        
+    ReportByPeriod:
+      value:
+        incomeReport:
+          incomeSum: 4367.04
+          listIncomeOperations:
+            - typeIncome:
+              amount: 4364.39
+              typeId: 1
+              comments:
+              id: 1
+              createDate: 2024-03-10T00:00:00
+              updateDate: 2024-03-10T00:00:00
+            - typeIncome:
+              amount: 2.65
+              typeId: 3
+              comments:
+              id: 2
+              createDate: 2024-03-15T00:00:00
+              updateDate: 2024-03-15T00:00:00
+        expenseReport:
+          expenseSum: 3500
+          listExpenseOperations:
+            - typeExpense:
+              amount: 2500
+              typeId: 1
+              comments:
+              id: 1
+              createDate: 2024-03-15T00:00:00
+              updateDate: 2024-03-15T00:00:00
+            - typeExpense:
+              amount: 1000
+              typeId: 2
+              comments:
+              id: 2
+              createDate: 2024-03-17T00:00:00
+              updateDate: 2024-03-17T00:00:00
+              
+    ReportByEnterDate:
+      value:
+        incomeReport:
+          incomeSum: 2000
+          listIncomeOperations:
+            - typeIncome:
+              amount: 1000
+              typeId: 4
+              comments:
+              id: 17
+              createDate: 2024-07-24T06:31:53.013
+              updateDate: 2024-07-24T06:31:53.013
+            - typeIncome:
+              amount: 1000
+              typeId: 4
+              comments:
+              id: 18
+              createDate: 2024-07-24T06:31:53.013
+              updateDate: 2024-07-24T06:31:53.013
+        expenseReport:
+          expenseSum: 2000
+          listExpenseOperations:
+            - typeExpense:
+              amount: 1000
+              typeId: 4
+              comments:
+              id: 11
+              createDate: 2024-07-24T06:31:57.01
+              updateDate: 2024-07-24T06:31:57.01
+            - typeExpense:
+              amount: 1000
+              typeId: 4
+              comments:
+              id: 12
+              createDate: 2024-07-24T06:31:57.01
+              updateDate: 2024-07-24T06:31:57.01
+              
+    UnexpectedError:
+      value:
+        message: "Unexpected error!\nPlease contact the site administrator to clarify the problem."

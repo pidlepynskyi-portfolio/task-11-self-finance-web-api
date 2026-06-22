@@ -1,0 +1,95 @@
+﻿@page "/report"
+@using Microsoft.AspNetCore.Components.Rendering
+@using SelfFinanceApp.Components.Layout
+@using SelfFinanceApp.Common.Enums
+
+@rendermode RenderMode.InteractiveServer
+
+<PageTitle>Report</PageTitle>
+
+<MudText Typo="Typo.h3">Report</MudText>
+
+<MudSelect @bind-Value="SelectedTypeReport" For="@(() => SelectedTypeReport)" Label="Type Report" Class="mt-6" Variant="Variant.Text">
+    <MudSelectItem Value="TypeReportEnum.OnDate">On Date</MudSelectItem>
+    <MudSelectItem Value="TypeReportEnum.ByPeriod">By Period</MudSelectItem>
+</MudSelect>
+
+@if (_selectedTypeReport == TypeReportEnum.OnDate)
+{
+    <MudDatePicker PickerVariant="PickerVariant.Dialog" Label="On Date" @bind-Date="_inputedOnDate" Class="mt-7" />
+}
+else
+{
+    <MudDateRangePicker PickerVariant="PickerVariant.Dialog" Label="Period Date" @bind-DateRange="@_dateRange" PlaceholderStart="Start Date" PlaceholderEnd="End Date" Class="mt-7" />
+}
+
+<MudButton Color="Color.Primary" OnClick="RunReport">Report</MudButton>
+<MudButton Color="Color.Secondary" OnClick="(()=>Reset())">Reset</MudButton>
+
+<MudStack Class="mt-15">
+    @_incomeReportContent
+    @_expenseReportContent
+    @_chartsReport
+</MudStack>
+
+@code {
+    private void RenderIncomeReportContent(RenderTreeBuilder __builder)
+    {
+        if (_report is null)
+        {
+            <MudProgressLinear Color="Color.Primary" Indeterminate="true" Class="my-7" />
+        }
+        else
+        {
+            <MudText Typo="Typo.h5">Incomes</MudText>
+            <MudText>Total income: @_report.IncomeReport?.IncomeSum</MudText>
+
+            <MudTable Items="_report.IncomeReport?.ListIncomeOperations!" Dense>
+                <HeaderContent>
+                    <MudTh>Type Income</MudTh>
+                    <MudTh>Amount</MudTh>
+                    <MudTh>Date operation</MudTh>
+                    <MudTh>Comments</MudTh>
+                </HeaderContent>
+                <RowTemplate>
+                    <MudTd DataLabel="Type Income">@context.TypeIncome?.Name</MudTd>
+                    <MudTd DataLabel="Amount">@context.Amount</MudTd>
+                    <MudTd DataLabel="Create Date Operation">@context.CreateDate</MudTd>
+                    <MudTd DataLabel="Comments">@context.Comments</MudTd>
+                </RowTemplate>
+            </MudTable>
+        }
+    }
+
+    private void RenderExpenseReportContent(RenderTreeBuilder __builder)
+    {
+        if (_report is not null)
+        {
+            <MudText Typo="Typo.h5" Class="mt-7">Expenses</MudText>
+            <MudText>Total expense: @_report.ExpenseReport?.ExpenseSum</MudText>
+
+            <MudTable Items="_report.ExpenseReport?.ListExpenseOperations!" Dense>
+                <HeaderContent>
+                    <MudTh>Type Expense</MudTh>
+                    <MudTh>Amount</MudTh>
+                    <MudTh>Date operation</MudTh>
+                    <MudTh>Comments</MudTh>
+                </HeaderContent>
+                <RowTemplate>
+                    <MudTd DataLabel="Type Expense">@context.TypeExpense?.Name</MudTd>
+                    <MudTd DataLabel="Amount">@context.Amount</MudTd>
+                    <MudTd DataLabel="Create Date Operation">@context.CreateDate</MudTd>
+                    <MudTd DataLabel="Comments">@context.Comments</MudTd>
+                </RowTemplate>
+            </MudTable>
+        }
+    }
+
+    private void RenderChartsReport(RenderTreeBuilder __builder)
+    {
+        if (_report is not null)
+        {
+            <ChartsReport Report="@_report"/>
+        }
+    }
+}

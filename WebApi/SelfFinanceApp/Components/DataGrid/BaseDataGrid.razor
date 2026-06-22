@@ -1,0 +1,49 @@
+﻿@using SelfFinanceApp.Exceptions
+@typeparam TDataItem
+
+@attribute [StreamRendering]
+
+<style>
+    .selected {
+        background-color: #1E88E5 !important;
+    }
+    .selected > td {
+        color: white !important;
+    }
+    .selected > td .mud-input {
+        color: white !important;
+    }
+
+    .editable_btn {
+        position: fixed;
+        right: 0;
+        opacity: 0.4;
+    }
+
+    .editable_btn:hover {
+        opacity: 1;
+    }
+</style>
+
+<PageTitle>@PageTitle</PageTitle>
+
+<MudText Typo="Typo.h3">@PageTitle.ToUpper()</MudText>
+
+<MudStack Class="d-flex editable_btn z-100 mr-15 mt-1 align-center">
+    <MudFab Color="Color.Tertiary" StartIcon="@Icons.Material.Filled.Add" Size="Size.Medium" OnClick="GoToCreate" />
+    <MudFab Color="Color.Warning" StartIcon="@Icons.Material.Filled.Edit" Size="Size.Small" @bind-Disabled="btnsCrudDisabled" OnClick="()=>GoToEdit(_mudTable.SelectedItem!, UriEditPageItem)" />
+    <MudFab Color="Color.Secondary" StartIcon="@Icons.Material.Filled.Remove" Size="Size.Small" @bind-Disabled="btnsCrudDisabled" OnClick="OnDelete" />
+</MudStack>
+
+<MudTable T="TDataItem" Items="@Items" Hover="true" Breakpoint="Breakpoint.Sm" @ref="_mudTable"
+          RowClass="cursor-pointer" OnRowClick="RowClickEvent" RowClassFunc="@SelectedRowClassFunc">
+    <HeaderContent>
+        @HeaderColumnsTemplate
+    </HeaderContent>
+    <RowTemplate>
+        @ColumnsTemplate(context)
+    </RowTemplate>
+    <PagerContent>
+        <MudTablePager />
+    </PagerContent>
+</MudTable>

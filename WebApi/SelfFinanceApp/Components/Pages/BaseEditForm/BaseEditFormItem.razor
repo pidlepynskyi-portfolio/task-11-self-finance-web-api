@@ -1,0 +1,14 @@
+﻿@typeparam TItem
+
+<PageTitle>@HeaderPage</PageTitle>
+
+<MudText Typo="Typo.h3">@HeaderPage</MudText>
+
+<EditForm EditContext="@editContext">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    @_renderInputComponetsForm
+    <MudButton Color="Color.Primary" OnClick="Submit">Save</MudButton>
+    <MudButton Color="Color.Secondary" OnClick="GoToBack">Cancel</MudButton>
+    <MudButton Color="Color.Dark" OnClick="CopyItem">Reset</MudButton>
+</EditForm>

@@ -1,0 +1,34 @@
+﻿@page "/incomes"
+@using InfrastructureApi.DTO
+@using SelfFinanceApp.Components.DataGrid
+@using SelfFinanceApp.Components.Layout
+@using SelfFinanceApp.Common
+
+@inherits BaseEntityPage<IncomeDTO>
+
+@rendermode RenderMode.InteractiveServer
+
+@if (listEntity == null)
+{
+    <MudProgressLinear Color="Color.Primary" Indeterminate="true" Class="my-7" />
+}
+else
+{
+    <BaseDataGrid Items="@listEntity"
+                  PageTitle="Incomes"
+                  UriAddPageItem="@uriAddPageItem"
+                  UriEditPageItem="@((item) => String.Format(uriBaseEditPageItem!, item.Id))">
+        <HeaderColumnsTemplate>
+            <MudTh>Name Income</MudTh>
+            <MudTh>Date</MudTh>
+            <MudTh>Time</MudTh>
+            <MudTh>Amount</MudTh>
+        </HeaderColumnsTemplate>
+        <ColumnsTemplate>
+            <MudTd DataLabel="Name Icone">@context.TypeIncome?.Name</MudTd>
+            <MudTd DataLabel="Date">@context.CreateDate!.Value.ToShortDateString()</MudTd>
+            <MudTd DataLabel="Time">@context.CreateDate!.Value.ToLongTimeString()</MudTd>
+            <MudTd DataLabel="Amount">@context.Amount</MudTd>
+        </ColumnsTemplate>
+    </BaseDataGrid>
+}

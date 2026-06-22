@@ -1,0 +1,36 @@
+﻿@if (Report.IncomeReport!.IncomeSum == 0
+     && Report.ExpenseReport!.ExpenseSum == 0)
+    return;
+
+<MudStack Wrap="Wrap.Wrap" Row="true" Justify="Justify.SpaceEvenly" Class="mt-7">
+    <MudStack Class="align-center">
+        <MudText Typo="Typo.h6">Total Sum</MudText>
+        <MudChart ChartType="ChartType.Donut" LegendPosition="Position.Right" Width="200px" Height="200px"
+                  InputData="_dataTotalAllSum"
+                  InputLabels="_labelsTotalAllSum">
+        </MudChart>
+    </MudStack>
+    
+    @if (Report.IncomeReport!.IncomeSum != 0)
+    {
+        <MudStack Class="align-center">
+            <MudText Typo="Typo.h6">Incomes Sum</MudText>
+            <MudChart ChartType="ChartType.Donut" LegendPosition="Position.Right" Width="200px" Height="200px"
+                      InputData="_dataTotalTypesIncomesSum"
+                      InputLabels="_labelsTotalTypesIncomesSum">
+            </MudChart>
+        </MudStack>
+    }
+    
+    @if (Report.ExpenseReport!.ExpenseSum != 0)
+    {
+        <MudStack Class="align-center">
+            <MudText Typo="Typo.h6">Expenses Sum</MudText>
+            <MudChart ChartType="ChartType.Donut" LegendPosition="Position.Right" Width="200px" Height="200px"
+                      InputData="_dataTotalTypesExpnesesSum"
+                      InputLabels="_labelsTotalTypesExensesSum">
+            </MudChart>
+        </MudStack>
+    }
+    
+</MudStack>
