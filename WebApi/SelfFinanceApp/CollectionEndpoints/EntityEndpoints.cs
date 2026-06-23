@@ -1,6 +1,5 @@
 ﻿using InfrastructureApi.DTO;
 using InfrastructureApi.Common;
-using System.Text.RegularExpressions;
 using SelfFinanceApp.Common;
 
 namespace SelfFinanceApp.CollectionEndpoints
@@ -21,23 +20,6 @@ namespace SelfFinanceApp.CollectionEndpoints
 
             GetAllAndPostRoute = $"/api/{_apiController}";
             GetAndEditAndDeleteByIdRoute = $"/api/{_apiController}/{{id}}";
-        }
-
-        private string DeletePartNameTypeEntity(string name, string deletePartStr)
-        {
-            string tempStr = name;
-            tempStr = Regex.Replace(tempStr, @$"{deletePartStr}$", "");
-
-            return tempStr;
-        }
-
-        private string LowerFirstChar(string str)
-        {
-            string tempStr = str;
-            char firstChar = str[0];
-            tempStr = Regex.Replace(tempStr, @"^\w{1}", firstChar.ToString().ToLower());
-
-            return tempStr;
         }
 
         public async Task<IEnumerable<TypeDTO>> GetAllFunc(IEntityService<TypeDTO> entityService, ILogger<EntityEndpoints<TypeDTO>> logger)
@@ -113,15 +95,6 @@ namespace SelfFinanceApp.CollectionEndpoints
 
             logger.LogInformation(endRequestMsgLog);
             return entity;
-        }
-
-        private async Task<bool> CheckEntityNotFound(int id, IEntityService<TypeDTO> entityService)
-        {
-            var entity = await entityService.GetByIdAsync(id);
-            if (entity is null)
-                return true;
-
-            return false;
         }
 
         private object NotFoundObjectRequest(ILogger<EntityEndpoints<TypeDTO>> logger, string endRequestMessage, string warningMsg = "")
